@@ -113,6 +113,6 @@ def voir_contacts(request):
 
     return render(
         request,
-        'voir_contacts.html',
+        'blog/voir_contacts.html',
         {'contacts': Contact.objects.all()}
     )

@@ -66,6 +66,7 @@ class Offre(models.Model):
 class Contact(models.Model):
     nom = models.CharField(max_length=255)
     adresse = models.TextField()
-    photo = models.ImageField(upload_to="photos/")
+    #photo = models.ImageField(upload_to="photos/")
+    photo = models.ImageField()
     def __str__(self):
         return self.nom
