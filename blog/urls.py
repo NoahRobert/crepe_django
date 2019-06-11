@@ -10,5 +10,7 @@ urlpatterns = [
     path('article/<int:id>', views.lire, name='lire'),
     path('contact/', views.contact, name='contact'),
     path('test/', views.test_article, name='test_article'),
+    path('nouveau-contact/', views.nouveau_contact, name='nouveau_contact'),
+    path('voir-contacts/', views.voir_contacts),
 #    path('article/<int:id>-<slug:slug>', views.lire, name='lire')
 ]

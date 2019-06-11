@@ -86,3 +86,33 @@ def test_article(request):
         pass
     # Quoiqu'il arrive, on affiche la page du formulaire.
     return render(request, 'blog/contact.html', locals())
+
+from .forms import NouveauContactForm
+from blog.models import Contact
+def nouveau_contact(request):
+    sauvegarde = False
+    form = NouveauContactForm(request.POST or None, request.FILES)
+    # je peux mettre en commentaire, dans un formulaire la methode view est executee 2 fois
+    # la deuxieme fois avec url du template
+
+    if form.is_valid():
+        contact = Contact()
+        contact.nom = form.cleaned_data["nom"]
+        contact.adresse = form.cleaned_data["adresse"]
+        contact.photo = form.cleaned_data["photo"]
+        contact.save()
+        sauvegarde = True
+
+
+    return render(request, 'blog/contact2.html', {
+        'form': form,
+        'sauvegarde': sauvegarde
+    })
+
+def voir_contacts(request):
+
+    return render(
+        request,
+        'voir_contacts.html',
+        {'contacts': Contact.objects.all()}
+    )
