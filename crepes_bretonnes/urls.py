@@ -15,11 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import url
 from blog import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls')),
-    path('mini_url/', include('mini_url.urls')),
+    url(r'^m/', include('mini_url.urls')),
 ]
 
 # Pour ajouter des images

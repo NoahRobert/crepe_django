@@ -1,12 +1,10 @@
-from django.urls import path
+from django.conf.urls import url
 from . import views
 
-#app_name = 'mini_url'
-# Apres oblige de faire rajouter ci dessous le app_name:name sinon Reverse for 'creation' not found. 'creation' is not a valid view function or pattern name.
-#<a href="{% url 'mini_url:creation' %}"> qund je precise lapp</a>
 urlpatterns = [
-    path('voir-urls/', views.voir_urls, name='voir-urls'),
-    path('nouveau-url/', views.creation_miniurl, name='creation'),
-    path('m/<code>', views.redirection, name='redirection'),
-#    path('article/<int:id>-<slug:slug>', views.lire, name='lire')
+    # Une string vide indique la racine
+    url(r'^$', views.liste, name='url_liste'),
+    url(r'^nouveau$', views.nouveau, name='url_nouveau'),
+    # (?P<code>\w{6}) capturera 6 caractères alphanumériques.
+    url(r'^(?P<code>\w{6})/$', views.redirection, name='url_redirection'),
 ]

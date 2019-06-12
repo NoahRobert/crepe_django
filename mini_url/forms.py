@@ -1,6 +1,8 @@
 from django import forms
+from .models import MiniURL
 
-class ContactForm(forms.Form):
-    url = forms.URLField()
-    pseudo = forms.CharField(max_length=100)
+class MiniURLForm(forms.ModelForm):
+    class Meta:
+        model = MiniURL
+        fields = ('url', 'pseudo')
 
