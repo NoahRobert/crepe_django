@@ -116,3 +116,27 @@ def voir_contacts(request):
         'blog/voir_contacts.html',
         {'contacts': Contact.objects.all()}
     )
+
+from django.views.generic import ListView
+from .models import Article, Categorie
+class ListeArticles(ListView):
+    model = Article
+    context_object_name = "derniers_articles"
+    template_name = "blog/accueil.html"
+    paginate_by = 2
+
+    def get_queryset(self):
+        return Article.objects.filter(categorie__id=self.kwargs['id'])
+
+    def get_context_data(self, **kwargs):
+        # Nous récupérons le contexte depuis la super-classe
+        context = super(ListeArticles, self).get_context_data(**kwargs)
+        # Nous ajoutons la liste des catégories, sans filtre particulier
+        context['categories'] = Categorie.objects.all()
+        return context
+
+from django.views.generic import DetailView
+class LireArticle(DetailView):
+    context_object_name = "article"
+    model = Article
+    template_name = "blog/lire.html"
