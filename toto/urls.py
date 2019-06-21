@@ -16,17 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
-from blog import views
+# Dans le fichier urls.py de notre application auth
+from . import views
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('blog/', include('blog.urls')),
-    url(r'^m/', include('mini_url.urls')),
-    url(r'^toto/', include('toto.urls')),
+    url(r'^connexion$', views.connexion, name='connexion'),
+    url(r'^exit', views.deconnexion, name='exit'),
 ]
-
-# Pour ajouter des images
-
-from django.conf.urls.static import static
-from django.conf import settings
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

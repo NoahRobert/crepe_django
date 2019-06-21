@@ -3,11 +3,11 @@ from mini_url.models import MiniURL
 from mini_url.forms import MiniURLForm
 
 
-def liste(request):
-    """ Affichage des redirections """
-    minis = MiniURL.objects.order_by('-nb_acces')
-
-    return render(request, 'mini_url/liste.html', locals())
+# def liste(request):
+#     """ Affichage des redirections """
+#     minis = MiniURL.objects.order_by('-nb_acces')
+#
+#     return render(request, 'mini_url/liste.html', locals())
 
 
 def nouveau(request):
@@ -30,6 +30,25 @@ def redirection(request, code):
     mini.save()
 
     return redirect(mini.url, permanent=True)
+
+
+from django.core.paginator import Paginator, EmptyPage
+
+def liste(request, page=1):
+    """ Affichage des redirections enregistrées """
+    minis_list = MiniURL.objects.order_by('-nb_acces')
+    paginator = Paginator(minis_list, 5)  # 5 liens par page
+
+    try:
+        # La définition de nos URL autorise comme argument « page » uniquement
+        # des entiers, nous n'avons pas à nous soucier de PageNotAnInteger
+        minis = paginator.page(page)
+    except EmptyPage:
+        # Nous vérifions toutefois que nous ne dépassons pas la limite de page
+        # Par convention, nous renvoyons la dernière page dans ce cas
+        minis = paginator.page(paginator.num_pages)
+
+    return render(request, 'mini_url/liste.html', locals())
 
 
 from django.views.generic import CreateView, UpdateView, DeleteView
@@ -71,3 +90,4 @@ class URLDelete(DeleteView):
     def get_object(self, queryset=None):
         code = self.kwargs.get('code', None)
         return get_object_or_404(MiniURL, code=code)
+

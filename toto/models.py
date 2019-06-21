@@ -14,3 +14,4 @@ class Cours(models.Model):
 
     def __str__(self):
         return self.nom
+
